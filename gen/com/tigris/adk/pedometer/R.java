@@ -76,6 +76,7 @@ public final class R {
         public static final int speed_value=0x7f09000c;
         public static final int step_units=0x7f090003;
         public static final int step_value=0x7f090002;
+        public static final int txtMsg=0x7f090016;
     }
     public static final class layout {
         public static final int main=0x7f030000;
@@ -97,6 +98,7 @@ public final class R {
         public static final int exercise_type_walking=0x7f080038;
         public static final int extra_high=0x7f08001a;
         public static final int extra_low=0x7f080022;
+        public static final int hello=0x7f080059;
         public static final int high=0x7f08001c;
         public static final int higher=0x7f08001d;
         public static final int inches=0x7f08000c;
@@ -174,6 +176,7 @@ public final class R {
         public static final int wake_up=0x7f080028;
     }
     public static final class xml {
-        public static final int preferences=0x7f040000;
+        public static final int accessory_filter=0x7f040000;
+        public static final int preferences=0x7f040001;
     }
 }

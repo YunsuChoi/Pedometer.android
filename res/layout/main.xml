@@ -161,14 +161,14 @@
     </LinearLayout>
 
     <!-- Desired pace/speed row -->
+
     <LinearLayout
         android:id="@+id/desired_pace_control"
-        android:paddingTop="@dimen/row_spacing" 
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/row_spacing" >
     
         <!-- Button "-", for decrementing desired pace/speed -->
         <Button android:id="@+id/button_desired_pace_lower"
@@ -207,5 +207,17 @@
             android:layout_height="@dimen/button"/>
 
     </LinearLayout>
-   
+
+   <LinearLayout
+       xmlns:android="http://schemas.android.com/apk/res/android"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical" >
+
+    <TextView android:id="@+id/txtMsg"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hello"/>
+</LinearLayout>
+ 
 </LinearLayout>

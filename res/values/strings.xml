@@ -96,5 +96,6 @@
     <string name="incorrect_step_length">Incorrect step length format! Go to the Settings to change it!</string>
 
     <string name="quit">Quit</string>
+    <string name="hello">hello?</string>
 
 </resources>
