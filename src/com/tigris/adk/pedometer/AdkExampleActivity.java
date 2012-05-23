@@ -20,7 +20,7 @@ import com.android.future.usb.UsbManager;
 public class AdkExampleActivity extends Activity {
 	
 	private static final String ACTION_USB_PERMISSION = 
-			"com.tigris.adk.pedometer.action.USB_PERMISSION";
+			"com.tigris.adk.pedometer.USB_PERMISSION";
 	
 	// USB가 감지되었을 때의 이벤트를 받음.
 	private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
@@ -35,7 +35,7 @@ public class AdkExampleActivity extends Activity {
 					if (intent.getBooleanExtra(
 							UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
 						// 수락했을 경우
-						showMessage("receiver : USB Host 연결됨.");
+						showMessage("Receiver : USB Host 연결됨.");
 					} else {
 						Log.d(AdkExampleActivity.class.getName(), 
 								"permission denied for accessory "
@@ -81,7 +81,7 @@ public class AdkExampleActivity extends Activity {
 				ACTION_USB_PERMISSION), 0);
     }
     
-    /** 액티비티가 화면에 보일 때 호출 */
+    /** 액티비티가 화면에 보일 때 호출 */ 
     @Override
 	public void onResume() {
 		super.onResume();
@@ -91,7 +91,7 @@ public class AdkExampleActivity extends Activity {
 		UsbAccessory accessory = (accessories == null ? null : accessories[0]);
 		if (accessory != null) { // Android Accessory Protocol를 구현한 장비를 찾았을 경우
 			if (mUsbManager.hasPermission(accessory)) {
-				showMessage("onresume : USB Host 연결됨.");
+				showMessage("onResume : USB Host 연결됨.");
 				openAccessory(accessory);
 			} else {
 				synchronized (mUsbReceiver) {
