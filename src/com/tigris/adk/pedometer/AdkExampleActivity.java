@@ -35,7 +35,7 @@ public class AdkExampleActivity extends Activity {
 					if (intent.getBooleanExtra(
 							UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
 						// 수락했을 경우
-						showMessage("Receiver : USB Host 연결됨.");
+						showMessage("receiver : USB Host 연결됨.");
 					} else {
 						Log.d(AdkExampleActivity.class.getName(), 
 								"permission denied for accessory "
@@ -58,7 +58,7 @@ public class AdkExampleActivity extends Activity {
 		}
 	};
 	
-	private TextView txtMsg;
+	public TextView txtMsg;
 	private UsbManager mUsbManager;
 	private UsbAccessory mAccessory;
 	private PendingIntent mPermissionIntent;
