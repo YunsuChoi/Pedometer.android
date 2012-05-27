@@ -39,8 +39,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.tigris.adk.pedometer.R;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.CompoundButton;
 
 import com.android.future.usb.UsbAccessory;
 import com.android.future.usb.UsbManager;
@@ -70,6 +73,9 @@ public class Pedometer extends Activity {
 
 	private static final String ACTION_USB_PERMISSION = 
 			"com.tigris.adk.pedometer.USB_PERMISSION";
+	
+	private ToggleButton btnLed;
+
 	private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
@@ -84,7 +90,7 @@ public class Pedometer extends Activity {
 						// 수락했을 경우
 						showMessage("receiver : USB Host 연결됨.");
 					} else {
-						Log.d(AdkExampleActivity.class.getName(), 
+						Log.d(Pedometer.class.getName(), 
 								"permission denied for accessory "
 								+ accessory);
 					}
@@ -107,6 +113,8 @@ public class Pedometer extends Activity {
 	
 
 	public TextView txtMsg;
+    private AdkHandler handler;
+
 	private UsbManager mUsbManager;
 	private UsbAccessory mAccessory;
 	private PendingIntent mPermissionIntent;
@@ -132,7 +140,8 @@ public class Pedometer extends Activity {
         mUtils = Utils.getInstance();
         
 txtMsg = (TextView)this.findViewById(R.id.txtMsg);
-        
+btnLed = (ToggleButton)this.findViewById(R.id.btnLed);
+
         //Android Accessory Protocol을 구현한 장비의 연결에 대한 브로드캐스트 리시버 등록
       	IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
       	filter.addAction(UsbManager.ACTION_USB_ACCESSORY_DETACHED);
@@ -141,6 +150,16 @@ txtMsg = (TextView)this.findViewById(R.id.txtMsg);
       	mUsbManager = UsbManager.getInstance(this);
 		mPermissionIntent = PendingIntent.getBroadcast(this, 0, new Intent(
 				ACTION_USB_PERMISSION), 0);
+		 btnLed.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+
+             @Override
+             public void onCheckedChanged(CompoundButton buttonView,
+                                      boolean isChecked) {
+                  if(handler != null && handler.isConnected()){
+                       handler.write((byte)0x1, (byte)0x0, isChecked ? 1 : 0);
+                       showMessage("Printer " + (isChecked ? "Start" : "Stop"));
+                  }
+             }});
     }
     
     @Override
@@ -252,7 +271,7 @@ txtMsg = (TextView)this.findViewById(R.id.txtMsg);
 				}
 			}
 		} else {
-			Log.d(AdkExampleActivity.class.getName(), "mAccessory is null");
+			Log.d(Pedometer.class.getName(), "mAccessory is null");
 		}
     }
     
@@ -280,6 +299,8 @@ txtMsg = (TextView)this.findViewById(R.id.txtMsg);
 
         super.onPause();
         savePaceSetting();
+        
+        closeAccessory();
     }
 
     @Override
@@ -295,11 +316,17 @@ txtMsg = (TextView)this.findViewById(R.id.txtMsg);
     }
     
     private void openAccessory(UsbAccessory accessory){
-		mAccessory = accessory;
+    	mAccessory = accessory;
+        if(handler == null)
+             handler = new AdkHandler();
+
+        handler.open(mUsbManager, mAccessory);
 	}
 	
 	private void closeAccessory(){
-		mAccessory = null;
+		if(handler != null && handler.isConnected())
+            handler.close();
+       mAccessory = null;
 	}
 	
 	private void showMessage(String msg){

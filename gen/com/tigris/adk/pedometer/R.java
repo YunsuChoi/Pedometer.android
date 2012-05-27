@@ -59,6 +59,7 @@ public final class R {
         public static final int box_pace=0x7f090008;
         public static final int box_speed=0x7f09000b;
         public static final int box_steps=0x7f090001;
+        public static final int btnLed=0x7f090018;
         public static final int button_desired_pace_lower=0x7f090012;
         public static final int button_desired_pace_raise=0x7f090015;
         public static final int calories_units=0x7f090010;
@@ -68,6 +69,7 @@ public final class R {
         public static final int desired_pace_value=0x7f090014;
         public static final int distance_units=0x7f090006;
         public static final int distance_value=0x7f090005;
+        public static final int linearLayout1=0x7f090017;
         public static final int pace_units=0x7f09000a;
         public static final int pace_value=0x7f090009;
         public static final int row_1=0x7f090000;
