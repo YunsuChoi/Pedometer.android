@@ -61,7 +61,7 @@ public class AdkHandler implements Runnable {
 	}
 	
 	public void write(byte command, byte target, int value) {
-	     byte[] buffer = new byte[3];
+	     byte[] buffer = new byte[1024];
 	     if (value > 255)
 	          value = 255; // 디지털 데이터를 0, 1을 사용하고 아날로그 데이터는 0 ~ 255의 범위의 값을 쓸 수 있다.
 

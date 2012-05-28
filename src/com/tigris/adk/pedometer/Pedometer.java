@@ -59,7 +59,7 @@ public class Pedometer extends Activity {
     private TextView mDistanceValueView;
     private TextView mSpeedValueView;
     private TextView mCaloriesValueView;
-    TextView mDesiredPaceView;
+    private TextView mDesiredPaceView;
     private int mStepValue;
     private int mPaceValue;
     private float mDistanceValue;
@@ -154,24 +154,22 @@ btnPnt = (ToggleButton)this.findViewById(R.id.btnPnt); // step_value 출력
 				ACTION_USB_PERMISSION), 0);
 		
 		 btnLed.setOnCheckedChangeListener(new OnCheckedChangeListener(){
-
              @Override
              public void onCheckedChanged(CompoundButton buttonView,
                                       boolean isChecked) {
                   if(handler != null && handler.isConnected()){
                        handler.write((byte)0x1, (byte)0x0, isChecked ? 1 : 0);
-                       showMessage("Printing " + (isChecked ? "Started" : "Ends"));
+                       showMessage("Prefixed Data Print " + (isChecked ? "Started" : "Ends"));
                   }
              }});
 		 
 		 btnPnt.setOnCheckedChangeListener(new OnCheckedChangeListener(){ 
-
              @Override
-             public void onCheckedChanged(CompoundButton buttonView, // 여기랑 
-                                      boolean isChecked) { // 여기 고쳐야 됨
+             public void onCheckedChanged(CompoundButton buttonView,  
+                                      boolean isChecked) { 
                   if(handler != null && handler.isConnected()){
-                       handler.write((byte)0x1, (byte)0x1, mStepValue);  //전송될 데이터 (스텝 값) 버퍼로 전송
-                       showMessage("Step Data Printing " + (isChecked ? "Started" : "Ends"));
+                		  handler.write((byte)0x1, (byte)0x1, mStepValue);  //전송될 데이터 (스텝 값) 버퍼로 전송
+                          showMessage("Step Data Print " + (isChecked ? "Started" : "Ends"));
                   }
              }});
     }
