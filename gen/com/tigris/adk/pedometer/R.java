@@ -60,6 +60,7 @@ public final class R {
         public static final int box_speed=0x7f09000b;
         public static final int box_steps=0x7f090001;
         public static final int btnLed=0x7f090018;
+        public static final int btnPnt=0x7f090019;
         public static final int button_desired_pace_lower=0x7f090012;
         public static final int button_desired_pace_raise=0x7f090015;
         public static final int calories_units=0x7f090010;

@@ -75,6 +75,7 @@ public class Pedometer extends Activity {
 			"com.tigris.adk.pedometer.USB_PERMISSION";
 	
 	private ToggleButton btnLed;
+	private ToggleButton btnPnt;
 
 	private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
 		@Override
@@ -140,7 +141,8 @@ public class Pedometer extends Activity {
         mUtils = Utils.getInstance();
         
 txtMsg = (TextView)this.findViewById(R.id.txtMsg);
-btnLed = (ToggleButton)this.findViewById(R.id.btnLed);
+btnLed = (ToggleButton)this.findViewById(R.id.btnLed); // 임의 설정된 데이터 출력 
+btnPnt = (ToggleButton)this.findViewById(R.id.btnPnt); // step_value 출력
 
         //Android Accessory Protocol을 구현한 장비의 연결에 대한 브로드캐스트 리시버 등록
       	IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
@@ -150,6 +152,7 @@ btnLed = (ToggleButton)this.findViewById(R.id.btnLed);
       	mUsbManager = UsbManager.getInstance(this);
 		mPermissionIntent = PendingIntent.getBroadcast(this, 0, new Intent(
 				ACTION_USB_PERMISSION), 0);
+		
 		 btnLed.setOnCheckedChangeListener(new OnCheckedChangeListener(){
 
              @Override
@@ -157,7 +160,18 @@ btnLed = (ToggleButton)this.findViewById(R.id.btnLed);
                                       boolean isChecked) {
                   if(handler != null && handler.isConnected()){
                        handler.write((byte)0x1, (byte)0x0, isChecked ? 1 : 0);
-                       showMessage("Printer " + (isChecked ? "Start" : "Stop"));
+                       showMessage("Printing " + (isChecked ? "Started" : "Ends"));
+                  }
+             }});
+		 
+		 btnPnt.setOnCheckedChangeListener(new OnCheckedChangeListener(){ 
+
+             @Override
+             public void onCheckedChanged(CompoundButton buttonView, // 여기랑 
+                                      boolean isChecked) { // 여기 고쳐야 됨
+                  if(handler != null && handler.isConnected()){
+                       handler.write((byte)0x1, (byte)0x1, mStepValue);  //전송될 데이터 (스텝 값) 버퍼로 전송
+                       showMessage("Step Data Printing " + (isChecked ? "Started" : "Ends"));
                   }
              }});
     }
