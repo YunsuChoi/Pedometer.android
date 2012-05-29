@@ -169,7 +169,7 @@ btnPnt = (ToggleButton)this.findViewById(R.id.btnPnt); // step_value 출력
                                       boolean isChecked) { 
                   if(handler != null && handler.isConnected()){
                 		  handler.write((byte)0x1, (byte)0x1, mStepValue);  //전송될 데이터 (스텝 값) 버퍼로 전송
-                          showMessage("Step Data Print " + (isChecked ? "Started" : "Ends"));
+                          showMessage("StepCounter Data Print " + (isChecked ? "Started" : "Ends"));
                   }
              }});
     }
