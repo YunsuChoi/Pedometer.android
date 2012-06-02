@@ -60,7 +60,7 @@ public class Pedometer extends Activity {
     private TextView mSpeedValueView;
     private TextView mCaloriesValueView;
     private TextView mDesiredPaceView;
-    private int mStepValue;
+    public int mStepValue;  //originally private.
     private int mPaceValue;
     private float mDistanceValue;
     private float mSpeedValue;
@@ -140,9 +140,9 @@ public class Pedometer extends Activity {
         
         mUtils = Utils.getInstance();
         
-txtMsg = (TextView)this.findViewById(R.id.txtMsg);
-btnLed = (ToggleButton)this.findViewById(R.id.btnLed); // 임의 설정된 데이터 출력 
-btnPnt = (ToggleButton)this.findViewById(R.id.btnPnt); // step_value 출력
+		txtMsg = (TextView)this.findViewById(R.id.txtMsg);
+		btnLed = (ToggleButton)this.findViewById(R.id.btnLed); // Arduino에 임의로 설정된(prefixed) 데이터 출력 
+		btnPnt = (ToggleButton)this.findViewById(R.id.btnPnt); // step_value 출력
 
         //Android Accessory Protocol을 구현한 장비의 연결에 대한 브로드캐스트 리시버 등록
       	IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
@@ -158,7 +158,7 @@ btnPnt = (ToggleButton)this.findViewById(R.id.btnPnt); // step_value 출력
              public void onCheckedChanged(CompoundButton buttonView,
                                       boolean isChecked) {
                   if(handler != null && handler.isConnected()){
-                       handler.write((byte)0x1, (byte)0x0, isChecked ? 1 : 0);
+                       handler.write((byte)0x1, (byte)0x0, isChecked ? 1 : 0); // Arduino에 지정된 주소값에 맞춰야 함
                        showMessage("Prefixed Data Print " + (isChecked ? "Started" : "Ends"));
                   }
              }});
@@ -518,12 +518,12 @@ btnPnt = (ToggleButton)this.findViewById(R.id.btnPnt); // step_value 출력
     private static final int SPEED_MSG = 4;
     private static final int CALORIES_MSG = 5;
     
-    private Handler mHandler = new Handler() {
+    public Handler mHandler = new Handler() { // what_if public?
         @Override public void handleMessage(Message msg) {
             switch (msg.what) {
                 case STEPS_MSG:
-                    mStepValue = (int)msg.arg1;
-                    mStepValueView.setText("" + mStepValue);
+                    mStepValue = (int)msg.arg1; // 실제 동작되는 값이 저장
+                    mStepValueView.setText("" + mStepValue); // 값을 증가시킨다.
                     break;
                 case PACE_MSG:
                     mPaceValue = msg.arg1;
