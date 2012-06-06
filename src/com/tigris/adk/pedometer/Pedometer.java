@@ -60,7 +60,7 @@ public class Pedometer extends Activity {
     private TextView mSpeedValueView;
     private TextView mCaloriesValueView;
     private TextView mDesiredPaceView;
-    public int mStepValue;  //originally private.
+    private int mStepValue;  
     private int mPaceValue;
     private float mDistanceValue;
     private float mSpeedValue;
@@ -522,7 +522,7 @@ public class Pedometer extends Activity {
         @Override public void handleMessage(Message msg) {
             switch (msg.what) {
                 case STEPS_MSG:
-                    mStepValue = (int)msg.arg1; // 실제 동작되는 값이 저장
+                    mStepValue = (int)msg.arg1; 
                     mStepValueView.setText("" + mStepValue); // 값을 증가시킨다.
                     break;
                 case PACE_MSG:
